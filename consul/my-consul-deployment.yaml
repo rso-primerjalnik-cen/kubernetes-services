@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-consul-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-consul
+  template:
+    metadata:
+      labels:
+        app: my-consul
+    spec:
+      containers:
+      - name: my-consul
+        image: consul
+        ports:
+        - containerPort: 8500
+          name: server
+          protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-consul
+spec:
+  type: LoadBalancer
+  selector:
+    app: my-consul
+  ports:
+  - port: 8500
+    protocol: TCP
+    targetPort: server

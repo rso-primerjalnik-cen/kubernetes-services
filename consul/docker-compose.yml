@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  my-consul:
+    image: consul
+    container_name: my-consul
+    ports:
+      - "8500:8500"
+    environment:
+      PYTHONPATH: "/code/"
+    networks:
+      - users_internal-network
+
+networks:
+  users_internal-network:
+    external: true
